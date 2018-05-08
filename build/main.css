@@ -25785,6 +25785,10 @@ conllu-editor .conllu-cell {
   display: inline-block;
 }
 
+conllu-editor .conllu-cell:after {
+  content: '  ';
+}
+
 conllu-editor .conllu-cell-0 {
   color: #005cc5;
   min-width: 2em;

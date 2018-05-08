@@ -369,7 +369,11 @@ ConlluService = __decorate([
 /***/ (function(module, exports) {
 
 function webpackEmptyAsyncContext(req) {
-	return new Promise(function(resolve, reject) { reject(new Error("Cannot find module '" + req + "'.")); });
+	// Here Promise.resolve().then() is used instead of new Promise() to prevent
+	// uncatched exception popping up in devtools
+	return Promise.resolve().then(function() {
+		throw new Error("Cannot find module '" + req + "'.");
+	});
 }
 webpackEmptyAsyncContext.keys = function() { return []; };
 webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
@@ -382,7 +386,11 @@ webpackEmptyAsyncContext.id = 117;
 /***/ (function(module, exports) {
 
 function webpackEmptyAsyncContext(req) {
-	return new Promise(function(resolve, reject) { reject(new Error("Cannot find module '" + req + "'.")); });
+	// Here Promise.resolve().then() is used instead of new Promise() to prevent
+	// uncatched exception popping up in devtools
+	return Promise.resolve().then(function() {
+		throw new Error("Cannot find module '" + req + "'.");
+	});
 }
 webpackEmptyAsyncContext.keys = function() { return []; };
 webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
@@ -731,7 +739,7 @@ var AnnotatePage = (function () {
             this.log = "";
             // console.log("Here",this.conlluRaw)
             var that = this;
-            this.doc.parse(this.conlluRaw, function (s) {
+            this.doc.parse(this._conlluRaw, function (s) {
                 that.log = that.log + s + '\n';
             }, false); //.toBrat(logger, true);
             // if(typeof highlightRef  == "string")
@@ -1781,17 +1789,28 @@ var AnnotatePage = (function () {
 }());
 __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])('lemma'),
-    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* RadioGroup */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* RadioGroup */]) === "function" && _a || Object)
+    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* RadioGroup */])
 ], AnnotatePage.prototype, "lemmaGroup", void 0);
 __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])('myTags'),
-    __metadata("design:type", typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_7__components_tags_selector_tags_selector__["a" /* TagsSelectorComponent */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__components_tags_selector_tags_selector__["a" /* TagsSelectorComponent */]) === "function" && _b || Object)
+    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_7__components_tags_selector_tags_selector__["a" /* TagsSelectorComponent */])
 ], AnnotatePage.prototype, "myTags", void 0);
 AnnotatePage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-annotate',template:/*ion-inline-start:"/Users/abbander/Leeds/Wasim/src/pages/annotate/annotate.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>ترميز الملف: {{pageid}}</ion-title>\n    <ion-buttons end>\n      <button right ion-button icon-only (click)="search($event)" tabindex="-1">\n        <ion-icon name="search"></ion-icon>\n      </button>\n      <button right ion-button icon-only (click)="presentHelpFormPopover($event)" tabindex="-1">\n        <ion-icon name="help"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n<ion-content padding>\n  <!-- <ion-list> -->\n  <!-- <ion-item *ngFor="">\n    <ion-avatar item-left>\n      <h1></h1>\n    </ion-avatar>\n    <h2>Finn</h2>\n    <h3>Don\'t Know What To Do!</h3>\n    <p>I\'ve had a pretty messed up day. If we just...</p>\n  </ion-item> -->\n  <ion-grid (window:keydown)="keyboardShortcuts($event)" style="height: 100%;">\n    <ion-row>\n<!--       <ion-col style="display:none; margin: 0">\n        <div id="vis"></div>\n        <ion-textarea id="parsed" rows="10" cols="80"></ion-textarea>\n      </ion-col>\n -->      <ion-col col-12>\n        <ion-row>\n          <tags-selector *ngIf="config" #myTags [config]="config"></tags-selector>\n          <button class=\'topbar_button\' ion-button tabindex="-1" (click)="syncConllU()">\n            <ion-icon name="sync"></ion-icon>\n          </button>\n          <button *ngIf="config?.debug" class=\'topbar_button\' icon-left ion-button tabindex="-1" (click)="showStats()">\n            <ion-icon name="print"></ion-icon>Stats</button>\n          <button class=\'topbar_button\' [disabled]="undoArr.length==0" icon-left ion-button tabindex="-1" (click)="undo()">\n            <ion-icon name="undo"></ion-icon> Undo\n          </button>\n          <button class=\'topbar_button\' [disabled]="redoArr.length==0" icon-left ion-button tabindex="-1" (click)="redo()">\n            <ion-icon name="redo"></ion-icon> Redo\n          </button>\n          <!-- <button class=\'topbar_button\' icon-left ion-button tabindex="-1" (click)="clone()"><ion-icon name="add"></ion-icon></button> -->\n          <!-- <button class=\'topbar_button\' icon-left ion-button tabindex="-1" (click)="delete()"><ion-icon name="remove"></ion-icon></button> -->\n          <button class=\'topbar_button\' icon-left ion-button tabindex="-1" (click)="saveFile()">\n            <ion-icon name="cloud-upload"></ion-icon> Save\n          </button>\n          <button class=\'topbar_button\' icon-left right ion-button tabindex="-1" (click)="config.isConlluHidden=!config.isConlluHidden">\n            {{config.isConlluHidden? "Show":"Hide"}} ConllU\n          </button>\n        </ion-row>\n        <!-- <ion-row>\n          <div *ngFor="let tag of sentenceTags;" class="tag" title="{{tag.desc}}" >\n              {{tag.tag}}\n              <span class="fn">F{{tag.fn}}</span>\n          </div>\n        </ion-row> -->\n      </ion-col>\n    </ion-row>\n    <ion-row style="height: inherit;">\n      <ion-col col-2>\n        <ion-row style="height: 95%;">\n          <ion-list *ngIf="highlight.element">\n            <!--         <ion-item>\n          <ion-label color="primary" stacked>Lemma</ion-label>\n          <ion-input [(ngModel)]="highlight.element.lemma"></ion-input>\n        </ion-item>-->\n              <button color="dark" outline block icon-left ion-button tabindex="-1" (click)="tag_morphofeatures()">\n                <ion-icon name="apps"></ion-icon>Features</button>\n              <button  color="dark" outline block icon-left ion-button tabindex="-1" (click)="tag_ma()">\n                <ion-icon name="menu"></ion-icon>Analyser</button>\n            <!--           <ion-item>\n            <button class=\'topbar_button\' icon-left ion-button tabindex="-1" (click)="mark_misc(\'UNCLEAR\')">\n              <ion-icon name="warning"></ion-icon>Unclear</button>\n            <ion-badge item-end>{{highlight.element.id}}</ion-badge>\n          </ion-item>\n -->\n            <ion-item *ngIf="highlight.element.parent">\n              <ion-label color="primary" stacked>Inflected Word Form</ion-label>\n              <ion-input [(ngModel)]="highlight.element.parent.form" tabindex="2" [ngClass]="{\n              rtl:configService.isRtl(project)}"></ion-input>\n            </ion-item>\n            <!--        <ion-item>\n          <ion-label color="primary" stacked>Token form</ion-label>\n          <ion-input [(ngModel)]="highlight.element.form" tabindex="3" [ngClass]="{\n              rtl:configService.isRtl(project)}"></ion-input>\n        </ion-item>\n -->\n            <ion-item (click)="mark_misc(\'UNCLEAR\')">\n              <ion-label>Unclear?</ion-label>\n              <ion-checkbox [(ngModel)]="highlight.element._miscs[\'UNCLEAR\']"></ion-checkbox>\n            </ion-item>\n            <ion-item>\n              <ion-label color="primary" stacked>Lemma</ion-label>\n              <ion-input [(ngModel)]="highlight.element.lemma" tabindex="4" [ngClass]="{\n              rtl:configService.isRtl(project)}"></ion-input>\n            </ion-item>\n            <ion-item *ngFor="let feat of highlight.element.features; let i=index">\n              <ion-label color="primary" stacked>{{feat.key}}</ion-label>\n              <ion-select [(ngModel)]="feat.value" interface="popover">\n                <ion-option *ngFor="let e of config.mf[feat.key];" [value]="e.tag">{{e.desc}}</ion-option>\n              </ion-select>\n              <!-- <ion-input class="featname" value="{{feat.value}}" tabindex="{{i+4}}"></ion-input> -->\n            </ion-item>\n            <ion-item>\n              <ion-label color="primary" stacked>XPOS Tag</ion-label>\n              <ion-select [(ngModel)]="highlight.element.xpostag" tabindex="2">\n                <ion-option *ngFor="let tag of config.alltags;" [value]="tag.tag">{{tag.tag}}: {{tag.desc}}</ion-option>\n              </ion-select>\n            </ion-item>\n            <ion-item>\n              <ion-label color="primary" stacked>UPOS Tag</ion-label>\n              <ion-select [(ngModel)]="highlight.element.upostag">\n                <ion-option *ngFor="let tag of config.allutags;" [value]="tag.tag">{{tag.tag}}: {{tag.desc}}</ion-option>\n              </ion-select>\n            </ion-item>\n          </ion-list>\n          <guider *ngIf="config.askGuider && highlight.element" [element]="highlight.element" [config]="config" type="specialPos" [project]="project" [hash]="hash"> </guider>\n          <guider *ngIf="config.askGuider && highlight.element" [element]="highlight.element" [config]="config" type="specialSeg" [project]="project" [hash]="hash"> </guider>\n        </ion-row>\n      </ion-col>\n      <ion-col id="sentences" *ngIf="config">\n        <div *ngFor="let sent of doc?.sentences | isNextSentence: highlight.sentence" class="sentence" [ngClass]="{\n              rtl:configService.isRtl(project)}" >\n              <!-- [hidden]=""> -->\n          <div>{{sent.tag}}</div>\n          <div tabindex="{{elem == highlight.element ? 1 : -1}}" *ngFor="let elem of sent.elements ; let i = index" class="element {{elem.upostag}}" [ngClass]="{\n              isCompounds:elem.upostag==\'_\',\n              highlight: highlight.element != null && (elem == highlight.element || elem.parent == highlight.element),\n              copied: copyElement != null && (elem == copyElement || elem.parent == copyElement),\n              rtl:config.isRtl,\n              unclear: elem._miscs[\'UNCLEAR\'],\n              newline2: i%config.rowlength==0,\n              isSeg: elem.isSeg > 0 }" (click)="events.publish(\'highlight:change\',elem,true,false)" [hidden]="elem.isMultiword">\n            <input *ngIf="editable && elem == highlight.element;else other_content" class="formInput" value="{{elem.form}}" focus="true" (keydown)="keyupFormEditor($event,elem)" (blur)="blurFormEditor($event,elem)" (focus)="resize($event)" (keyup)="resize($event)" />\n            <ng-template #other_content>\n              <span class="form" #spanForm>{{elem.getForm()}}</span>\n            <span class="postag">{{config.useUD ? config.tags[\'U:\'+elem.upostag]?.desc : config.tags[\'X:\'+elem.xpostag]?.desc}}</span>\n            <span class="mf_missing" [hidden]="elem.morphFeatsMissing().length == 0">{{elem.morphFeatsMissing().length}}</span>\n            </ng-template>\n          </div>\n        </div>\n      </ion-col>\n      <ion-col col-4 id="conlluColumn" *ngIf="!config.isConlluHidden">\n        <!--         <ion-row *ngIf="editingMode" style="height: 95%;">\n          <ion-textarea tabindex="-1" no-text-wrap id="conlluTextArea" [ngModel]="conlluRaw" (change)="onConlluRawChanged($event)" style="font-size: 7pt; margin-top:0; width: 100%;"></ion-textarea>\n        </ion-row>\n -->\n        <ion-row *ngIf="log.length>0">\n          <ion-item>Error log:</ion-item>\n          <ion-textarea [ngModel]="log" id="errorTextArea" rows="7" cols="80" style="margin-top:0" disabled="disabled">\n          </ion-textarea>\n        </ion-row>\n        <ion-row style="height: 95%; position: relative">\n          <conllu-editor [filename]="project+\'-\'+pageid" [raw]="conlluRaw" [hid]="[highlight.element?._id,highlight.sentence?._id]"></conllu-editor>\n        </ion-row>\n      </ion-col>\n    </ion-row>\n    <!-- no need to show the intermediate data representation -->\n    <!-- <div class="conllu-parse" data-visid="vis" data-inputid="input" data-parsedid="parsed" data-logid="log"> -->\n  </ion-grid>\n  <!-- </ion-list> -->\n</ion-content>\n'/*ion-inline-end:"/Users/abbander/Leeds/Wasim/src/pages/annotate/annotate.html"*/,
+        selector: 'page-annotate',template:/*ion-inline-start:"/Users/abbander/Leeds/Wasim/src/pages/annotate/annotate.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>ترميز الملف: {{pageid}}</ion-title>\n    <ion-buttons end>\n      <button right ion-button icon-only (click)="search($event)" tabindex="-1">\n        <ion-icon name="search"></ion-icon>\n      </button>\n      <button right ion-button icon-only (click)="presentHelpFormPopover($event)" tabindex="-1">\n        <ion-icon name="help"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n<ion-content padding>\n  <!-- <ion-list> -->\n  <!-- <ion-item *ngFor="">\n    <ion-avatar item-left>\n      <h1></h1>\n    </ion-avatar>\n    <h2>Finn</h2>\n    <h3>Don\'t Know What To Do!</h3>\n    <p>I\'ve had a pretty messed up day. If we just...</p>\n  </ion-item> -->\n  <ion-grid (window:keydown)="keyboardShortcuts($event)" style="height: 100%;">\n    <ion-row>\n<!--       <ion-col style="display:none; margin: 0">\n        <div id="vis"></div>\n        <ion-textarea id="parsed" rows="10" cols="80"></ion-textarea>\n      </ion-col>\n -->      <ion-col col-12>\n        <ion-row>\n          <tags-selector *ngIf="config" #myTags [config]="config"></tags-selector>\n        </ion-row>\n        <ion-row>\n          <button small class=\'topbar_button\' ion-button tabindex="-1" (click)="syncConllU()">\n            <ion-icon name="sync"></ion-icon>\n          </button>\n          <button small *ngIf="config?.debug" class=\'topbar_button\' icon-left ion-button tabindex="-1" (click)="showStats()">\n            <ion-icon name="print"></ion-icon>Stats</button>\n          <button small class=\'topbar_button\' [disabled]="undoArr.length==0" icon-left ion-button tabindex="-1" (click)="undo()">\n            <ion-icon name="undo"></ion-icon> Undo\n          </button>\n          <button small class=\'topbar_button\' [disabled]="redoArr.length==0" icon-left ion-button tabindex="-1" (click)="redo()">\n            <ion-icon name="redo"></ion-icon> Redo\n          </button>\n          <!-- <button small class=\'topbar_button\' icon-left ion-button tabindex="-1" (click)="clone()"><ion-icon name="add"></ion-icon></button> -->\n          <!-- <button small class=\'topbar_button\' icon-left ion-button tabindex="-1" (click)="delete()"><ion-icon name="remove"></ion-icon></button> -->\n          <button small class=\'topbar_button\' icon-left ion-button tabindex="-1" (click)="saveFile()">\n            <ion-icon name="cloud-upload"></ion-icon> Save\n          </button>\n          <button small class=\'topbar_button\' icon-left ion-button tabindex="-1" (click)="find($event)">\n            <ion-icon name="search"></ion-icon> Search\n          </button>\n          <button small class=\'topbar_button\' icon-left ion-button tabindex="-1" (click)="search($event)">\n            <ion-icon name="search"></ion-icon> Word Lookup\n          </button>\n          <button small class=\'topbar_button\' icon-left right ion-button tabindex="-1" (click)="config.isConlluHidden=!config.isConlluHidden">\n            {{config.isConlluHidden? "Show":"Hide"}} ConllU\n          </button>\n        </ion-row>\n        <!-- <ion-row>\n          <div *ngFor="let tag of sentenceTags;" class="tag" title="{{tag.desc}}" >\n              {{tag.tag}}\n              <span class="fn">F{{tag.fn}}</span>\n          </div>\n        </ion-row> -->\n      </ion-col>\n    </ion-row>\n    <ion-row style="height: inherit;">\n      <ion-col col-2>\n        <ion-row style="height: 95%;">\n          <ion-list *ngIf="highlight.element">\n              <button color="dark" outline block icon-left ion-button tabindex="-1" (click)="tag_morphofeatures()">\n                <ion-icon name="apps"></ion-icon>Features</button>\n              <button  color="dark" outline block icon-left ion-button tabindex="-1" (click)="tag_ma()">\n                <ion-icon name="menu"></ion-icon>Analyser</button>\n          <button color="dark" outline block icon-left ion-button tabindex="-1" (click)="addNote($event)">\n            <ion-icon name="create"></ion-icon> Note\n          </button>\n            <ion-item *ngIf="highlight.element.parent">\n              <ion-label color="primary" stacked>Inflected Word Form</ion-label>\n              <ion-input [(ngModel)]="highlight.element.parent.form" tabindex="2" [ngClass]="{\n              rtl:configService.isRtl(project)}"></ion-input>\n            </ion-item>\n            <ion-item (click)="mark_misc(\'UNCLEAR\')">\n              <ion-label>Unclear?</ion-label>\n              <ion-checkbox [(ngModel)]="highlight.element._miscs[\'UNCLEAR\']"></ion-checkbox>\n            </ion-item>\n            <ion-item>\n              <ion-label color="primary" stacked>Lemma</ion-label>\n              <ion-input [(ngModel)]="highlight.element.lemma" tabindex="4" [ngClass]="{\n              rtl:configService.isRtl(project)}"></ion-input>\n            </ion-item>\n            <ion-item *ngFor="let feat of highlight.element.features; let i=index">\n              <ion-label color="primary" stacked>{{feat.key}}</ion-label>\n              <ion-select [(ngModel)]="feat.value" interface="popover">\n                <ion-option *ngFor="let e of config.mf[feat.key];" [value]="e.tag">{{e.desc}}</ion-option>\n              </ion-select>\n              <!-- <ion-input class="featname" value="{{feat.value}}" tabindex="{{i+4}}"></ion-input> -->\n            </ion-item>\n            <ion-item>\n              <ion-label color="primary" stacked>XPOS Tag</ion-label>\n              <ion-select [(ngModel)]="highlight.element.xpostag" tabindex="2">\n                <ion-option *ngFor="let tag of config.alltags;" [value]="tag.tag">{{tag.tag}}: {{tag.desc}}</ion-option>\n              </ion-select>\n            </ion-item>\n            <ion-item>\n              <ion-label color="primary" stacked>UPOS Tag</ion-label>\n              <ion-select [(ngModel)]="highlight.element.upostag">\n                <ion-option *ngFor="let tag of config.allutags;" [value]="tag.tag">{{tag.tag}}: {{tag.desc}}</ion-option>\n              </ion-select>\n            </ion-item>\n          </ion-list>\n          <guider *ngIf="config.askGuider && highlight.element" [element]="highlight.element" [config]="config" type="specialPos" [project]="project" [hash]="hash"> </guider>\n          <guider *ngIf="config.askGuider && highlight.element" [element]="highlight.element" [config]="config" type="specialSeg" [project]="project" [hash]="hash"> </guider>\n        </ion-row>\n      </ion-col>\n      <ion-col id="sentences" *ngIf="config">\n        <div *ngFor="let sent of doc?.sentences | isNextSentence: highlight.sentence" class="sentence" [ngClass]="{\n              rtl:configService.isRtl(project)}" >\n              <!-- [hidden]=""> -->\n          <div>{{sent.tag}}</div>\n          <div tabindex="{{elem == highlight.element ? 1 : -1}}" *ngFor="let elem of sent.elements ; let i = index" class="element {{elem.upostag}}" [ngClass]="{\n              isCompounds:elem.upostag==\'_\',\n              highlight: highlight.element != null && (elem == highlight.element || elem.parent == highlight.element),\n              copied: copyElement != null && (elem == copyElement || elem.parent == copyElement),\n              rtl:config.isRtl,\n              unclear: elem._miscs[\'UNCLEAR\'],\n              newline2: i%config.rowlength==0,\n              isSeg: elem.isSeg > 0 }" (click)="events.publish(\'highlight:change\',elem,true,false)" [hidden]="elem.isMultiword">\n            <input *ngIf="editable && elem == highlight.element;else other_content" class="formInput" value="{{elem.form}}" focus="true" (keydown)="keyupFormEditor($event,elem)" (blur)="blurFormEditor($event,elem)" (focus)="resize($event)" (keyup)="resize($event)" />\n            <ng-template #other_content>\n              <span class="form" #spanForm>{{elem.getForm()}}</span>\n            <span class="postag">{{config.useUD ? config.tags[\'U:\'+elem.upostag]?.desc : config.tags[\'X:\'+elem.xpostag]?.desc}}</span>\n            <span class="mf_missing" [hidden]="elem.morphFeatsMissing().length == 0">{{elem.morphFeatsMissing().length}}</span>\n            </ng-template>\n          </div>\n        </div>\n      </ion-col>\n      <ion-col col-4 id="conlluColumn" *ngIf="!config.isConlluHidden">\n        <!--         <ion-row *ngIf="editingMode" style="height: 95%;">\n          <ion-textarea tabindex="-1" no-text-wrap id="conlluTextArea" [ngModel]="conlluRaw" (change)="onConlluRawChanged($event)" style="font-size: 7pt; margin-top:0; width: 100%;"></ion-textarea>\n        </ion-row>\n -->\n        <ion-row *ngIf="log.length>0">\n          <ion-item>Error log:</ion-item>\n          <ion-textarea [ngModel]="log" id="errorTextArea" rows="7" cols="80" style="margin-top:0" disabled="disabled">\n          </ion-textarea>\n        </ion-row>\n        <ion-row style="height: 95%; position: relative">\n          <conllu-editor [filename]="project+\'-\'+pageid" [raw]="conlluRaw" [hid]="[highlight.element?._id,highlight.sentence?._id]" (highlightChange)="highlightElement($event)" (rawChange)="conlluRaw=$event"></conllu-editor>\n        </ion-row>\n      </ion-col>\n    </ion-row>\n    <!-- no need to show the intermediate data representation -->\n    <!-- <div class="conllu-parse" data-visid="vis" data-inputid="input" data-parsedid="parsed" data-logid="log"> -->\n  </ion-grid>\n  <!-- </ion-list> -->\n</ion-content>\n'/*ion-inline-end:"/Users/abbander/Leeds/Wasim/src/pages/annotate/annotate.html"*/,
     }),
-    __metadata("design:paramtypes", [typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* PopoverController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* PopoverController */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["Renderer"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["Renderer"]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */]) === "function" && _h || Object, typeof (_j = typeof __WEBPACK_IMPORTED_MODULE_2__providers_word_service__["a" /* WordService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_word_service__["a" /* WordService */]) === "function" && _j || Object, typeof (_k = typeof __WEBPACK_IMPORTED_MODULE_3__providers_conllu_service__["a" /* ConlluService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_conllu_service__["a" /* ConlluService */]) === "function" && _k || Object, typeof (_l = typeof __WEBPACK_IMPORTED_MODULE_4__providers_config_service__["b" /* ConfigService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__providers_config_service__["b" /* ConfigService */]) === "function" && _l || Object, typeof (_m = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* LoadingController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* LoadingController */]) === "function" && _m || Object, typeof (_o = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _o || Object, typeof (_p = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* ToastController */]) === "function" && _p || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* PopoverController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */],
+        __WEBPACK_IMPORTED_MODULE_0__angular_core__["Renderer"],
+        __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */],
+        __WEBPACK_IMPORTED_MODULE_2__providers_word_service__["a" /* WordService */],
+        __WEBPACK_IMPORTED_MODULE_3__providers_conllu_service__["a" /* ConlluService */],
+        __WEBPACK_IMPORTED_MODULE_4__providers_config_service__["b" /* ConfigService */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* LoadingController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* ToastController */]])
 ], AnnotatePage);
 
 var Highlight = (function () {
@@ -1879,7 +1898,6 @@ var Stats = (function () {
     return Stats;
 }());
 
-var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p;
 //# sourceMappingURL=annotate.js.map
 
 /***/ }),
@@ -1943,7 +1961,7 @@ var WordService = (function () {
                 // we've got back the raw data, now generate the core schedule data
                 // and save the data for later reference
                 if (!data.ok) {
-                    return reject("MA Results are not valid");
+                    return reject(data.error);
                 }
                 /***
                 ** MA Results
@@ -1994,7 +2012,7 @@ var WordService = (function () {
                 // we've got back the raw data, now generate the core schedule data
                 // and save the data for later reference
                 if (!data.ok) {
-                    return reject("MemMa Results are not valid.");
+                    return reject(data.error);
                 }
                 /***
                 ** MA Results
@@ -3772,7 +3790,7 @@ __decorate([
 ], TagsSelectorComponent.prototype, "_config", void 0);
 TagsSelectorComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'tags-selector',template:/*ion-inline-start:"/Users/abbander/Leeds/Wasim/src/components/tags-selector/tags-selector.html"*/'<button color="secondary" ion-button *ngFor="let tag of currentTags;" class="tag" title="{{tag.desc}}" (click)="selectTag(tag)" tabindex="-1">\n  {{tag.desc}}\n  <ion-badge >{{tag.fn}}</ion-badge>\n</button>\n\n<button ion-button color="secondary" class="tag" title="Press 0 for more tags" (click)="increaseTagsRow()" tabindex="-1">\n  More\n  <ion-badge >0</ion-badge>\n</button>\n'/*ion-inline-end:"/Users/abbander/Leeds/Wasim/src/components/tags-selector/tags-selector.html"*/,
+        selector: 'tags-selector',template:/*ion-inline-start:"/Users/abbander/Leeds/Wasim/src/components/tags-selector/tags-selector.html"*/'<button color="secondary" ion-button *ngFor="let tag of currentTags;" small class="tag" title="{{tag.desc}}" (click)="selectTag(tag)" tabindex="-1">\n  {{tag.desc}}\n  <ion-badge >{{tag.fn}}</ion-badge>\n</button>\n\n<button small ion-button color="secondary" class="tag" title="Press 0 for more tags" (click)="increaseTagsRow()" tabindex="-1">\n  More\n  <ion-badge >0</ion-badge>\n</button>\n'/*ion-inline-end:"/Users/abbander/Leeds/Wasim/src/components/tags-selector/tags-selector.html"*/,
         inputs: ['config']
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */]])
@@ -4414,7 +4432,7 @@ class ConlluDocument {
                 logLineError('expected 10 fields, got ' + fields.length);
                 util_1.Util.repairFields(fields, this.logger);
             }
-            var element = new element_1.ConlluElement(fields, idx, line, currentSentence);
+            var element = new element_1.ConlluElement(fields, "" + idx, line, currentSentence);
             let issues = element.validate();
             issues.forEach(v => logLineError(v));
             if (issues.length !== 0) {
@@ -4717,7 +4735,6 @@ var GuiderComponent = (function () {
         this.events = events;
         this.toastCtrl = toastCtrl;
         this.viewCtrl = viewCtrl;
-        this.showDetails = false;
         this.project = "";
         this.hash = "";
         this.options = [];
@@ -4750,7 +4767,7 @@ var GuiderComponent = (function () {
     GuiderComponent.prototype.ngOnChanges = function (changes) {
         this.options = this.guidelinesService.get(this.type, this.element.form).options;
         if (this.options)
-            this.options.forEach(function (e) { return e.showDetails = true; });
+            this.options.forEach(function (e) { return e.showDetails = false; });
         if (this.show())
             this.events.publish("stats", { action: "showGuider", elements: this.element });
     };
@@ -4872,7 +4889,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  * Components.
  */
 var ConlluEditorComponent = (function () {
-    function ConlluEditorComponent() {
+    function ConlluEditorComponent(renderer) {
+        this.renderer = renderer;
         this.conlluRawSpansSubset = [{}];
         this._conlluRaw = "";
         this.eid = -1;
@@ -4931,7 +4949,7 @@ var ConlluEditorComponent = (function () {
             });
             // r[index]=e.target.innerText
             var conlluRaw = _this.conlluRaw.split("\n").map(function (rr, i) {
-                return i == row_index ? e.target.innerText : rr;
+                return i == row_index ? e.target.innerText.trim() : rr;
             }).join("\n");
             // console.log(this.conlluRaw)
             if (document.activeElement.classList.contains("conllu-row"))
@@ -4945,35 +4963,34 @@ var ConlluEditorComponent = (function () {
     ConlluEditorComponent.prototype.removeConlluRawRow = function (r, row_index, e) {
         var _this = this;
         if (e === void 0) { e = null; }
-        //make sure there is a tab after each span
-        setTimeout(function () {
-            // r[index]=e.target.innerText
-            var conlluRaw = _this.conlluRaw.split("\n").filter(function (rr, i) {
-                return i != row_index;
-            }).join("\n");
-            // if(document.activeElement.classList.contains("conllu-row"))
-            //   return
-            // this.saveForUndo(conlluRaw)
-            _this.conlluRawChange.emit(conlluRaw);
-        });
+        if (e && window.getSelection().baseOffset != 0)
+            return;
+        this.conlluRaw = this.conlluRaw.split("\n").filter(function (rr, i) {
+            return i != row_index;
+        }).join("\n");
+        setTimeout(function () { return e ? _this.focus(row_index, e) : ""; });
+        this.conlluRawChange.emit(this.conlluRaw);
     };
     ConlluEditorComponent.prototype.addConlluRawRow = function (r, row_index, e) {
         var _this = this;
         if (e === void 0) { e = null; }
-        //make sure there is a tab after each span
-        setTimeout(function () {
-            // r[index]=e.target.innerText
-            var ar = _this.conlluRaw.split("\n");
-            ar.splice(row_index, 0, "# ");
-            var conlluRaw = ar.join("\n");
-            // this.conlluRawSpans.splice(row_index,0, {sentid: this.conlluRawSpans[row_index].sentid, elemid:"comment", elems: ["# "]})
-            // console.log(this.conlluRaw)
-            // console.log(document.activeElement)
-            // if(document.activeElement.classList.contains("conllu-row"))
-            // return
-            // this.saveForUndo(conlluRaw)
-            _this.conlluRawChange.emit(conlluRaw);
-        });
+        if (e)
+            e.preventDefault();
+        var ar = this.conlluRaw.split("\n");
+        ar.splice(row_index, 0, "# ");
+        this.conlluRaw = ar.join("\n");
+        setTimeout(function () { return e ? _this.focus(row_index, e) : ""; });
+        this.conlluRawChange.emit(this.conlluRaw);
+    };
+    ConlluEditorComponent.prototype.focus = function (row_index, e) {
+        if (e === void 0) { e = null; }
+        // var current =
+        var highlighNode = document.querySelector("div.conllu-row-" + row_index);
+        console.log(highlighNode);
+        if (highlighNode)
+            this.renderer.invokeElementMethod(highlighNode, 'focus', []);
+        // else
+        // console.log("Not found",current)
     };
     ConlluEditorComponent.prototype.downloadConlluRawRow = function (r, row_index, e) {
         if (e === void 0) { e = null; }
@@ -5003,7 +5020,7 @@ var ConlluEditorComponent = (function () {
                 sentid: sentid,
                 elemid: elemid,
                 line: i,
-                elems: e.split("\t").map(function (ee) { return ee += "\t"; })
+                elems: e.split("\t") //.map(ee=>ee+="\t")
             };
         });
     };
@@ -5024,18 +5041,18 @@ __decorate([
     __metadata("design:paramtypes", [Array])
 ], ConlluEditorComponent.prototype, "hid", null);
 __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Output"])(),
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Output"])('rawChange'),
     __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"])
 ], ConlluEditorComponent.prototype, "conlluRawChange", void 0);
 __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Output"])(),
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Output"])('highlightChange'),
     __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"])
 ], ConlluEditorComponent.prototype, "highlighElementChange", void 0);
 ConlluEditorComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'conllu-editor',template:/*ion-inline-start:"/Users/abbander/Leeds/Wasim/src/components/conllu-editor/conllu-editor.html"*/'<!-- Generated template for the ConlluEditorComponent component -->\n<pre [style.counter-reset]="\'line \'+ start">\n<!--       --><div contenteditable="true" class="conllu-row" [ngClass]="{\n              highlight:sid==r.sentid && eid == r.elemid}" *ngFor="let r of conlluRawSpansSubset; let i = index" (blur)="onConlluRawSpansChanged(r,i, $event)"><div class=\'actions\' contenteditable="false"><button tabindex="-1" ion-button small icon-only color="light" (click)="removeConlluRawRow(r,i,$event)"><ion-icon name="remove"></ion-icon></button><button tabindex="-1" ion-button small icon-only color="light" (click)="addConlluRawRow(r,i,$event)"><ion-icon name="add"></ion-icon></button><button tabindex="-1" ion-button small icon-only color="light" (click)="highlighElementChange.emit(\'S\'+r.sentid+\':\'+r.elemid)"><ion-icon name="checkmark"></ion-icon></button></div><code class="conllu-cell conllu-cell-{{ii}} begins-with-{{c[0]==\'#\'}}" *ngFor="let c of r.elems; let ii = index">{{c}}</code><!--  --></div>\n          <button tabindex="-1" ion-button class="downloadButton" small icon-only color="light" (click)="downloadConlluRawRow($event)"><ion-icon name="download"></ion-icon></button>\n\n<!-- --></pre>\n'/*ion-inline-end:"/Users/abbander/Leeds/Wasim/src/components/conllu-editor/conllu-editor.html"*/
+        selector: 'conllu-editor',template:/*ion-inline-start:"/Users/abbander/Leeds/Wasim/src/components/conllu-editor/conllu-editor.html"*/'<!-- Generated template for the ConlluEditorComponent component -->\n<pre [style.counter-reset]="\'line \'+ start">\n<!--       --><div contenteditable="true" class="conllu-row conllu-row-{{i}}" [ngClass]="{\n              highlight:sid==r.sentid && eid == r.elemid}" *ngFor="let r of conlluRawSpansSubset; let i = index" (focus)="highlighElementChange.emit(\'S\'+r.sentid+\':\'+r.elemid)" (blur)="onConlluRawSpansChanged(r,i, $event)" (keydown.enter)="addConlluRawRow(r,i+1,$event)" (keydown.arrowup)="focus(i-1,$event)" (keydown.arrowdown)="focus(i+1,$event)" (keyup.backspace)="removeConlluRawRow(r,i,$event)"><code class="conllu-cell conllu-cell-{{ii}} begins-with-{{c[0]==\'#\'}}" *ngFor="let c of r.elems; let ii = index">{{c}}</code><!--  --></div>\n          <button tabindex="-1" ion-button class="downloadButton" small icon-only color="light" (click)="downloadConlluRawRow($event)"><ion-icon name="download"></ion-icon></button>\n\n<!-- --></pre>\n'/*ion-inline-end:"/Users/abbander/Leeds/Wasim/src/components/conllu-editor/conllu-editor.html"*/
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_core__["Renderer"]])
 ], ConlluEditorComponent);
 
 //# sourceMappingURL=conllu-editor.js.map
@@ -5572,10 +5589,10 @@ Util.repairFields = function (fields, logger) {
         fields = fields.slice(0, 10);
     }
     else {
-        logger('repair: filling in empty ("_") for missing fields');
-        for (let m = 0; m < 10 - fields.length; m++) {
+        for (let m = 0; fields.length < 10; m++) {
             fields.push('_');
         }
+        logger('repair: filling in empty ("_") for missing fields. Fields now are ' + fields.length);
     }
 };
 Util.strictFieldSplitter = function (line) {
