@@ -276,7 +276,7 @@ var ConfigService = (function () {
                 .map(function (res) { return res.json(); })
                 .subscribe(function (data) {
                 if (data.ok) {
-                    var config = new __WEBPACK_IMPORTED_MODULE_3__config_json_class__["a" /* ConfigJSON */](data);
+                    var config = new __WEBPACK_IMPORTED_MODULE_3__config_json_class__["a" /* ConfigJSON */](data.config);
                     config.project = project;
                     config.hash = hash;
                     config.keyboardShortcuts.forEach(function (e) {
@@ -349,7 +349,7 @@ var ConfigService = (function () {
                 if (data.ok) {
                     resolve();
                     config.isRtl = _this.isRtl(project);
-                    _this.config[project] = config;
+                    _this.config[project] = new __WEBPACK_IMPORTED_MODULE_3__config_json_class__["a" /* ConfigJSON */](config);
                 }
                 else
                     reject(data.error);
@@ -434,12 +434,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-/*
-  Generated class for the WordService provider.
-
-  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
-  for more info on providers and Angular 2 DI.
-*/
 var ProjectService = (function () {
     function ProjectService(http, myconfig) {
         this.http = http;
@@ -466,6 +460,31 @@ var ProjectService = (function () {
                 if (data.ok) {
                     _this.username = data.username;
                     _this._list = data;
+                    resolve(data);
+                }
+                else
+                    reject(data.error);
+            }, function (error) {
+                if (error.status != 200)
+                    reject("Server is not working properly. url=" + _this.myconfig.getValue("server"));
+            });
+        });
+    };
+    ProjectService.prototype.remove = function (project) {
+        var _this = this;
+        // don't have the data yet
+        return new Promise(function (resolve, reject) {
+            _this.http.post(_this.myconfig.getValue("server") + "projects_remove", {
+                project: project
+            }, _this.options)
+                .map(function (res) { return res.json(); })
+                .subscribe(function (data) {
+                // we've got back the raw data, now generate the core schedule data
+                // and save the data for later reference
+                // data = data;
+                if (data.ok) {
+                    if (_this._list.projects.length > 0)
+                        _this._list.projects = _this._list.projects.filter(function (p) { return project; });
                     resolve(data);
                 }
                 else
@@ -528,7 +547,7 @@ var ProjectService = (function () {
         var _this = this;
         // var this = this
         // don't have the data yet
-        return new Promise(function (resolve) {
+        return new Promise(function (resolve, reject) {
             _this.http.post(_this.myconfig.getValue("server") + "projects_create", {
                 // "security": security,
                 "project": project,
@@ -537,7 +556,10 @@ var ProjectService = (function () {
                 .subscribe(function (data) {
                 // we've got back the raw data, now generate the core schedule data
                 // and save the data for later reference
-                resolve(data);
+                if (data.ok)
+                    resolve(data);
+                else
+                    reject(data.error);
             });
         });
     };
@@ -595,6 +617,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 // import { GuidelinesService } from '../../providers/guidelines-service';
 
 
+// import { SegmentorPopoverPageComponent } from '../../components/segmentor-popover-page/segmentor-popover-page';
+// import { TagsSelectorComponent } from '../../components/tags-selector/tags-selector';
 // import { HighlightComponent } from '../../components/highlight/highlight';
 // import { GetFormPopoverComponent } from '../../components/get-form-popover/get-form-popover';
 // import { GuiderComponent } from '../../components/guider/guider';
@@ -1404,8 +1428,7 @@ var AnnotatePage = (function () {
         }
         else if (ev.code == "ArrowLeft") {
             if (ev.target.selectionStart == ev.target.value.length && ev.target.value == elem.form) {
-                console.log("here");
-                this.nav("word_left");
+                this.nav("word_next");
             }
         }
         else if (ev.code == "Escape") {
@@ -1414,8 +1437,7 @@ var AnnotatePage = (function () {
         }
         else if (ev.code == "ArrowRight") {
             if (ev.target.selectionStart == 0 && ev.target.value == elem.form) {
-                console.log("here");
-                this.nav("word_right");
+                this.nav("word_prev");
             }
         }
         else if (ev.code == "Enter") {
@@ -1665,9 +1687,9 @@ var AnnotatePage = (function () {
         if (!this.highlight.element)
             return;
         var x = null;
-        if (direction == "word_left")
+        if (direction == "word_next")
             x = this.highlight.sentence.elements.find(function (x) { return !x.isMultiword && parseInt(x.id) == parseInt(_this.highlight.element.id) + 1; });
-        else if (direction == "word_right")
+        else if (direction == "word_prev")
             x = this.highlight.sentence.elements.find(function (x) { return !x.isMultiword && parseInt(x.id) == (parseInt(_this.highlight.element.id) - 1); });
         if (x) {
             this.events.publish('highlight:change', x);
@@ -3007,26 +3029,26 @@ var ConfigJSON = (function () {
         this.undoSize = 5;
         this.features = {};
         if (data) {
-            this.remote_repo = data.config.remote_repo;
-            this.language = data.config.language;
-            this.tagset = data.config.tagset;
-            this.useUD = data.config.useUD;
-            this.isRtl = data.config.isRtl;
-            this.sync = data.config.sync;
-            this.undoSize = data.config.undoSize;
-            this.users = data.config.users;
-            this.keyboardShortcuts = data.config.keyboardShortcuts;
-            this.conlluEditorType = data.config.conlluEditorType; //as ConlluEditorType
-            this.askMA = data.config.askMA;
-            this.askMemMA = data.config.askMemMA;
-            this.askGuider = data.config.askGuider;
-            this.onFeatSelect = data.config.onFeatSelect;
-            this.MfVsPos = data.config["MF.vs.POS"] || data.config.MfVsPos;
-            this.MfVsPos_upostag = data.config["MF.vs.POS_upostag"] || data.config.MfVsPos_upostag;
-            this.mf = data.config.mf;
-            this.sentenceTags = data.config.sentenceTags;
-            this.allutags = data.config.allutags;
-            this.alltags = data.config.alltags;
+            this.remote_repo = data.remote_repo;
+            this.language = data.language;
+            this.tagset = data.tagset;
+            this.useUD = data.useUD;
+            this.isRtl = data.isRtl;
+            this.sync = data.sync;
+            this.undoSize = data.undoSize;
+            this.users = data.users;
+            this.keyboardShortcuts = data.keyboardShortcuts;
+            this.conlluEditorType = data.conlluEditorType; //as ConlluEditorType
+            this.askMA = data.askMA;
+            this.askMemMA = data.askMemMA;
+            this.askGuider = data.askGuider;
+            this.onFeatSelect = data.onFeatSelect;
+            this.MfVsPos = data["MF.vs.POS"] || data.MfVsPos;
+            this.MfVsPos_upostag = data["MF.vs.POS_upostag"] || data.MfVsPos_upostag;
+            this.mf = data.mf;
+            this.sentenceTags = data.sentenceTags;
+            this.allutags = data.allutags;
+            this.alltags = data.alltags;
         }
     }
     ConfigJSON.prototype.getFeature = function (key) {
@@ -3982,16 +4004,13 @@ var ProjectsPage = (function () {
         var _this = this;
         this.projectService.create(this.new_project)
             .then(function (result) {
-            if (result.ok) {
-                _this.projects.push({
-                    project: result.project,
-                    hash: result.hash,
-                });
-                // this.storage.set("project_hash_"+result.project,result.hash);
-            }
+            _this.projects.push({
+                project: result.project,
+                hash: result.hash,
+            });
         }).catch(function (e) {
             _this.toastCtrl.create({
-                message: _this.translateService.instant(e.error),
+                message: _this.translateService.instant(e),
                 duration: 3000,
                 position: "top"
             }).present();
@@ -4001,6 +4020,27 @@ var ProjectsPage = (function () {
         this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_3__docs_docs__["b" /* DocsPage */], {
             project: project.project,
             hash: project.hash,
+        });
+    };
+    ProjectsPage.prototype.remove = function (project) {
+        var _this = this;
+        this.projectService.remove(project.project).then(function (result) {
+            // this.validSecurity = true
+            // this.storage.set("security",this.security);
+            _this.projects = _this.projects.filter(function (p) { return p != project; });
+            if (result.projects.length == 0) {
+                _this.toastCtrl.create({
+                    message: _this.translateService.instant("There is no projects created yet. Please create one now."),
+                    duration: 3000,
+                    position: "top"
+                }).present();
+            }
+        }).catch(function (error) {
+            _this.toastCtrl.create({
+                message: _this.translateService.instant(error),
+                duration: 3000,
+                position: "top"
+            }).present();
         });
     };
     ProjectsPage.prototype.logout = function () {
@@ -4223,9 +4263,9 @@ var DocsPage = (function () {
     };
     DocsPage.prototype.udpipe = function (sentence) {
         var _this = this;
-        var that = this;
         this.conlluService.udpipe(this.project, this.hash, sentence, this.newFilename, this.configService.getConfig(this.project).language).then(function (result) {
-            that.list.push({ filename: result.filename, firstline: result.firstline });
+            _this.newFilename = "";
+            _this.list.push({ filename: result.filename, firstline: result.firstline });
         }).catch(function (err) {
             _this.toastCtrl.create({
                 message: _this.translateService.instant(err),
@@ -4257,7 +4297,7 @@ var DocsPage = (function () {
 }());
 DocsPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-docs',template:/*ion-inline-start:"/Users/abbander/Leeds/Wasim/src/pages/docs/docs.html"*/'<!--\n  Generated template for the DocsPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <ion-title>{{\'MANAGE PROJECT\' | translate}}: {{project}}</ion-title>\n    <ion-buttons end>\n      <button right ion-button icon-only (click)="openConfig()" tabindex="-1">\n        <ion-icon name="settings"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n<ion-content padding>\n  <ion-grid>\n    <ion-row>\n      <ion-col col-12>\n        <ion-list>\n          <ion-item *ngFor="let i of list">\n            {{i.filename}}\n            <ion-note>{{i.firstline}}</ion-note>\n            <button ion-button outline item-end icon-left (click)="goto(i.filename)">{{\'GO\' | translate}}</button>\n            <a ion-button outline item-end icon-left href="{{myconfig.getValue(\'server\')}}conllu_download?project={{project}}&hash={{hash}}&&file={{i.filename}}">{{\'DOWNLOAD\' | translate}}</a>\n            <button ion-button outline item-end icon-left color="danger" (click)="remove(i.filename)">{{\'DELETE\' | translate}}</button>\n          </ion-item>\n        </ion-list>\n      </ion-col>\n    </ion-row>\n    <ion-row>\n      <ion-card>\n        <ion-item>\n          <!-- <ion-label >Text</ion-label> -->\n          <ion-textarea [(ngModel)]="text" placeholder="Text you need to tokenize,tag"></ion-textarea>\n        </ion-item>\n        <ion-item-divider>\n        </ion-item-divider>\n        <ion-item>\n          <ion-label fixed>{{\'FILENAME\' | translate}}</ion-label>\n          <ion-input [(ngModel)]="newFilename"></ion-input>\n          <button ion-button outline item-end icon-left (click)="udpipe(text)">{{\'GO\' | translate}}</button>\n        </ion-item>\n      </ion-card>\n    </ion-row>\n    <ion-row ng2FileDrop (fileOver)="fileOverBase($event)" [uploader]="uploader" [ngClass]="{\'nv-file-over\': hasBaseDropZoneOver}">\n      <ion-card>\n        <ion-card-header>\n          {{\'UPLOADING FILES\' | translate}}\n        </ion-card-header>\n        <!--                 <table class="table">\n                    <thead>\n                        <tr>\n                            <th width="50%">Name</th>\n                            <th>Size</th>\n                            <th>Progress</th>\n                            <th>Status</th>\n                            <th>Actions</th>\n                        </tr>\n                    </thead>\n                    <tbody>\n -->\n        <ion-list>\n          <ion-item-divider>\n            {{\'FILE LIST\' | translate}}\n          </ion-item-divider>\n          <ion-item *ngFor="let item of uploader.queue">\n            <ion-avatar item-start>\n              <span *ngIf="item.isSuccess"><ion-icon name="cloud-done"></ion-icon></span>\n              <span *ngIf="item.isCancel"><ion-icon name="trash"></ion-icon></span>\n              <span *ngIf="item.isError"><ion-icon name="alert"></ion-icon></span> 1\n            </ion-avatar>\n            <h2>{{ item?.file?.name }}</h2>\n            <p *ngIf="uploader.isHTML5">{{ item?.file?.size/1024/1024 | number:\'.2\' }} MB</p>\n            <div *ngIf="uploader.isHTML5">\n              <div class="progress" style="margin-bottom: 0;">\n                <div class="progress-bar" role="progressbar" [ngStyle]="{ \'width\': item.progress + \'%\' }"></div>\n              </div>\n            </div>\n            <ion-row>\n              <ion-col>\n                <button ion-button icon-left clear small (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess">\n                  <ion-icon name="cloud-upload"></ion-icon>\n                  <div>{{\'Upload\' | translate}}</div>\n                </button>\n                <button ion-button icon-left clear small (click)="item.cancel()" [disabled]="!item.isUploading">\n                  <ion-icon name="undo"></ion-icon>\n                  <div>{{\'Cancel\' | translate}}</div>\n                </button>\n                <button ion-button icon-left clear small (click)="item.remove()">\n                  <ion-icon name="trash"></ion-icon>\n                  <div>{{\'Remove\' | translate}}</div>\n                </button>\n              </ion-col>\n            </ion-row>\n          </ion-item>\n        </ion-list>\n        <ion-item-divider>\n          {{\'UPLOAD A NEW FILE(S)\' | translate}}\n        </ion-item-divider>\n        <button ion-button (click)="uploadbutton.click()" icon-only>\n          <ion-icon name="cloud-upload"></ion-icon>\n          <input #uploadbutton type="file" ng2FileSelect [uploader]="uploader" multiple style="display: none" />\n        </button>\n      </ion-card>\n    </ion-row>\n  </ion-grid>\n</ion-content>\n'/*ion-inline-end:"/Users/abbander/Leeds/Wasim/src/pages/docs/docs.html"*/,
+        selector: 'page-docs',template:/*ion-inline-start:"/Users/abbander/Leeds/Wasim/src/pages/docs/docs.html"*/'<!--\n  Generated template for the DocsPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <ion-title>{{\'MANAGE PROJECT\' | translate}}: {{project}}</ion-title>\n    <ion-buttons end>\n      <button right ion-button icon-only (click)="openConfig()" tabindex="-1">\n        <ion-icon name="settings"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n<ion-content padding>\n  <ion-grid>\n    <ion-row>\n      <ion-col col-12>\n        <ion-list>\n          <ion-item *ngFor="let i of list">\n            {{i.filename}}\n            <ion-note>{{i.firstline}}</ion-note>\n            <button ion-button outline item-end icon-left (click)="goto(i.filename)">{{\'GO\' | translate}}</button>\n            <a ion-button outline item-end icon-left href="{{myconfig.getValue(\'server\')}}conllu_download?project={{project}}&hash={{hash}}&&file={{i.filename}}">{{\'DOWNLOAD\' | translate}}</a>\n            <button ion-button outline item-end icon-left color="danger" (click)="remove(i.filename)">{{\'DELETE\' | translate}}</button>\n          </ion-item>\n        </ion-list>\n      </ion-col>\n    </ion-row>\n    <ion-row>\n      <ion-card>\n        <ion-item>\n          <!-- <ion-label >Text</ion-label> -->\n          <ion-textarea [(ngModel)]="text" placeholder="Text you need to tokenize,tag" rows="7"></ion-textarea>\n        </ion-item>\n        <ion-item-divider>\n        </ion-item-divider>\n        <ion-item>\n          <ion-label fixed>{{\'FILENAME\' | translate}}</ion-label>\n          <ion-input [(ngModel)]="newFilename" required></ion-input>\n          <button ion-button outline item-end icon-left (click)="udpipe(text)">{{\'GO\' | translate}}</button>\n        </ion-item>\n      </ion-card>\n    </ion-row>\n    <ion-row ng2FileDrop (fileOver)="fileOverBase($event)" [uploader]="uploader" [ngClass]="{\'nv-file-over\': hasBaseDropZoneOver}">\n      <ion-card>\n        <ion-card-header>\n          {{\'UPLOADING FILES\' | translate}}\n        </ion-card-header>\n        <!--                 <table class="table">\n                    <thead>\n                        <tr>\n                            <th width="50%">Name</th>\n                            <th>Size</th>\n                            <th>Progress</th>\n                            <th>Status</th>\n                            <th>Actions</th>\n                        </tr>\n                    </thead>\n                    <tbody>\n -->\n        <ion-list>\n          <ion-item-divider>\n            {{\'FILE LIST\' | translate}}\n          </ion-item-divider>\n          <ion-item *ngFor="let item of uploader.queue">\n            <ion-avatar item-start>\n              <span *ngIf="item.isSuccess"><ion-icon name="cloud-done"></ion-icon></span>\n              <span *ngIf="item.isCancel"><ion-icon name="trash"></ion-icon></span>\n              <span *ngIf="item.isError"><ion-icon name="alert"></ion-icon></span> 1\n            </ion-avatar>\n            <h2>{{ item?.file?.name }}</h2>\n            <p *ngIf="uploader.isHTML5">{{ item?.file?.size/1024/1024 | number:\'.2\' }} MB</p>\n            <div *ngIf="uploader.isHTML5">\n              <div class="progress" style="margin-bottom: 0;">\n                <div class="progress-bar" role="progressbar" [ngStyle]="{ \'width\': item.progress + \'%\' }"></div>\n              </div>\n            </div>\n            <ion-row>\n              <ion-col>\n                <button ion-button icon-left clear small (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess">\n                  <ion-icon name="cloud-upload"></ion-icon>\n                  <div>{{\'Upload\' | translate}}</div>\n                </button>\n                <button ion-button icon-left clear small (click)="item.cancel()" [disabled]="!item.isUploading">\n                  <ion-icon name="undo"></ion-icon>\n                  <div>{{\'Cancel\' | translate}}</div>\n                </button>\n                <button ion-button icon-left clear small (click)="item.remove()">\n                  <ion-icon name="trash"></ion-icon>\n                  <div>{{\'Remove\' | translate}}</div>\n                </button>\n              </ion-col>\n            </ion-row>\n          </ion-item>\n        </ion-list>\n        <ion-item-divider>\n          {{\'UPLOAD A NEW FILE(S)\' | translate}}\n        </ion-item-divider>\n        <button ion-button (click)="uploadbutton.click()" icon-only>\n          <ion-icon name="cloud-upload"></ion-icon>\n          <input #uploadbutton type="file" ng2FileSelect [uploader]="uploader" multiple style="display: none" />\n        </button>\n      </ion-card>\n    </ion-row>\n  </ion-grid>\n</ion-content>\n'/*ion-inline-end:"/Users/abbander/Leeds/Wasim/src/pages/docs/docs.html"*/,
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */],
         __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */],
