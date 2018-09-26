@@ -6,9 +6,9 @@ webpackJsonp([0],{
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ConlluService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_configuration_service__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_configuration_service__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_http__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(35);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -215,9 +215,9 @@ ConlluService = __decorate([
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ConfigService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_configuration_service__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_configuration_service__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_http__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__config_json_class__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__config_json_class__ = __webpack_require__(37);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -416,9 +416,9 @@ webpackEmptyAsyncContext.id = 188;
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ProjectService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_configuration_service__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_configuration_service__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_http__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(35);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -587,7 +587,7 @@ ProjectService = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_word_service__ = __webpack_require__(237);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_conllu_service__ = __webpack_require__(123);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_config_service__ = __webpack_require__(125);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_config_json_class__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_config_json_class__ = __webpack_require__(37);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_selectize_popover_page_selectize_popover_page__ = __webpack_require__(240);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_ma_selectize_popover_page_ma_selectize_popover_page__ = __webpack_require__(241);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_help_popover_help_popover__ = __webpack_require__(243);
@@ -596,7 +596,7 @@ ProjectService = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__projects_projects__ = __webpack_require__(64);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_conllu_dao__ = __webpack_require__(124);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_conllu_dao___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12_conllu_dao__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_rxjs_add_operator_map__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_rxjs_add_operator_map__ = __webpack_require__(35);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13_rxjs_add_operator_map__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -658,7 +658,7 @@ var AnnotatePage = (function () {
         */
         this.tagsRow = 0;
         this.done = false;
-        this.conlluEditorType = "info";
+        this.conlluEditorType = "pretty";
         this.config = new __WEBPACK_IMPORTED_MODULE_5__providers_config_json_class__["a" /* ConfigJSON */]();
         // conllu : ConllU = new ConllU().Document();
         this.log = [];
@@ -811,8 +811,29 @@ var AnnotatePage = (function () {
             obj.tokens_no = this.doc.sentences.map(function (s) { return s.tokens().length; }).reduce(function (p, c) { return p += c; }, 0);
             obj.types_no = [].concat.apply([], this.doc.sentences.map(function (s) { return s.tokens().map(function (e) { return e.form; }); })).filter(function (e, i, arr) { return arr.indexOf(e) == i; }).length;
             obj.mwe_no = this.doc.sentences.map(function (s) { return s.elements.filter(function (el) { return el.isMultiword; }).length; }).reduce(function (p, c) { return p += c; }, 0);
+            obj.missing_features = {};
+            obj.upos = {};
+            this.config.allutags.forEach(function (t) {
+                obj.missing_features[t.tag] = {};
+                obj.upos[t.tag] = 0;
+            });
+            this.doc.sentences.forEach(function (s) {
+                s.elements.forEach(function (e) {
+                    obj.upos[e.upostag]++;
+                    var miss = e.morphFeatsMissing();
+                    miss.forEach(function (m) {
+                        obj.missing_features[e.upostag][m] = obj.missing_features[e.upostag][m] + 1 || 1;
+                    });
+                });
+            });
+            this.config.allutags.forEach(function (t) { return obj.missing_features[t.tag] = Object.keys(obj.missing_features[t.tag]).map(function (k) { return [k, obj.missing_features[t.tag][k]]; }); });
+            console.log(obj.missing_features);
             this._info = obj;
             return obj;
+        },
+        set: function (argv) {
+            this._info = argv;
+            this._info = this.info;
         },
         enumerable: true,
         configurable: true
@@ -1367,6 +1388,17 @@ var AnnotatePage = (function () {
         this.events.publish("stats", { action: "tag_ma", element: this.highlight.element });
         this.showAlertMessage = true;
     };
+    AnnotatePage.prototype.ionViewDidLoad = function () {
+        var _this = this;
+        // alternative: (put in annotate.ts)
+        // (window:keydown)="keyboardShortcuts($event)"
+        console.log("first_change");
+        document.addEventListener('keydown', function (event) {
+            _this.zone.run(function () {
+                _this.keyboardShortcuts(event);
+            });
+        });
+    };
     AnnotatePage.prototype.viewElementsPopup = function (analyses, e) {
         var _this = this;
         if (analyses === void 0) { analyses = []; }
@@ -1894,7 +1926,7 @@ __decorate([
 ], AnnotatePage.prototype, "lemmaGroup", void 0);
 AnnotatePage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-annotate',template:/*ion-inline-start:"/Users/abbander/Leeds/Wasim/src/pages/annotate/annotate.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>{{\'FILE\' | translate}}: {{pageid}}</ion-title>\n    <ion-buttons end>\n      <button right ion-button icon-only (click)="presentHelpFormPopover($event)" tabindex="-1">\n        <ion-icon name="help"></ion-icon>\n      </button>\n      <button small class=\'topbar_button\' ion-button icon-only tabindex="-1" (click)="syncConllU()">\n        <ion-icon name="sync"></ion-icon>\n      </button>\n      <button small *ngIf="config?.debug" class=\'topbar_button\' icon-left ion-button icon-only tabindex="-1" (click)="showStats()">\n        <ion-icon name="print"></ion-icon>\n      </button>\n      <button small class=\'topbar_button\' [disabled]="undoArr.length==0" icon-left ion-button icon-only tabindex="-1" (click)="undo()">\n        <ion-icon name="undo"></ion-icon>\n      </button>\n      <button small class=\'topbar_button\' [disabled]="redoArr.length==0" icon-left ion-button icon-only tabindex="-1" (click)="redo()">\n        <ion-icon name="redo"></ion-icon>\n      </button>\n      <button small class=\'topbar_button\' icon-left ion-button icon-only tabindex="-1" (click)="saveFile()">\n        <ion-icon name="cloud-upload"></ion-icon>\n      </button>\n      <button small class=\'topbar_button\' icon-left ion-button icon-only tabindex="-1" (click)="download()">\n        <ion-icon name="cloud-download"></ion-icon>\n      </button>\n      <button small class=\'topbar_button\' icon-left ion-button icon-only tabindex="-1" (click)="find($event)">\n        <ion-icon name="glasses"></ion-icon>\n      </button>\n      <button small class=\'topbar_button\' icon-left ion-button icon-only tabindex="-1" (click)="search($event)">\n        <ion-icon name="search"></ion-icon>\n      </button>\n      <button small class=\'topbar_button\' icon-left right ion-button icon-only tabindex="-1" (click)="config.isConlluHidden=!config.isConlluHidden">\n        <ion-icon [name]="config.isConlluHidden? \'eye\':\'eye-off\'"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n<ion-content padding>\n  <ion-grid (window:keydown)="keyboardShortcuts($event)" style="height: 100%;">\n    <ion-row>\n      <ion-col col-12>\n        <ion-row>\n          <tags-selector *ngIf="highlight.element" [currentTags]="currentTags" [element]="highlight.element" (nextTags)="increaseTagsRow()"></tags-selector>\n        </ion-row>\n      </ion-col>\n    </ion-row>\n    <ion-row style="height: inherit;">\n      <ion-col col-lg-2 col-sm-3 col-12>\n        <ion-list *ngIf="highlight.element">\n          <button color="dark" outline block icon-left ion-button tabindex="-1" (click)="tag_morphofeatures()">\n            <ion-icon name="apps"></ion-icon>{{ \'Features\' | translate }} </button>\n          <button color="dark" outline block icon-left ion-button tabindex="-1" (click)="tag_ma()">\n            <ion-icon name="menu"></ion-icon>{{\'Analyser\' | translate}}</button>\n          <button color="dark" outline block icon-left ion-button tabindex="-1" (click)="addNote($event)">\n            <ion-icon name="create"></ion-icon> {{\'Note\' | translate}}\n          </button>\n          <ion-item *ngIf="highlight.element.parent">\n            <ion-label color="primary" stacked>{{\'Inflected Word Form\' | translate}}</ion-label>\n            <ion-input [(ngModel)]="highlight.element.parent.form" tabindex="2" [ngClass]="{\n              rtl:configService.isRtl(project)}"></ion-input>\n          </ion-item>\n          <ion-item (click)="mark_misc(\'UNCLEAR\')">\n            <ion-label>{{\'Unclear?\' | translate}}</ion-label>\n            <ion-checkbox [(ngModel)]="highlight.element._miscs[\'UNCLEAR\']"></ion-checkbox>\n          </ion-item>\n          <ion-item>\n            <ion-label color="primary" stacked>{{\'Lemma\' | translate}}</ion-label>\n            <ion-input [(ngModel)]="highlight.element.lemma" tabindex="4" [ngClass]="{\n              rtl:configService.isRtl(project)}"></ion-input>\n          </ion-item>\n          <ion-item *ngFor="let feat of highlight.element.features; let i=index">\n            <ion-label color="primary" stacked>{{config.getFeature(feat.key).desc}}</ion-label>\n            <ion-select [(ngModel)]="feat.value" interface="popover">\n              <ion-option *ngFor="let e of config.mf[feat.key];" [value]="e.tag">{{e.desc}}</ion-option>\n            </ion-select>\n          </ion-item>\n          <ion-item>\n            <ion-label color="primary" stacked>{{\'XPOS Tag\' | translate}}</ion-label>\n            <ion-select [(ngModel)]="highlight.element._xpostag" tabindex="2">\n              <ion-option *ngFor="let tag of config.alltags;" [value]="tag.tag">{{tag.tag}}: {{tag.desc}}</ion-option>\n            </ion-select>\n          </ion-item>\n          <ion-item>\n            <ion-label color="primary" stacked>{{\'UPOS Tag\' | translate}}</ion-label>\n            <ion-select [(ngModel)]="highlight.element.upostag">\n              <ion-option *ngFor="let tag of config.allutags;" [value]="tag.tag">{{tag.tag}}: {{tag.desc}}</ion-option>\n            </ion-select>\n          </ion-item>\n        </ion-list>\n        <guider *ngIf="config.askGuider && highlight.element" [element]="highlight.element" [config]="config" type="specialPos" [project]="project" [hash]="hash"> </guider>\n        <guider *ngIf="config.askGuider && highlight.element" [element]="highlight.element" [config]="config" type="specialSeg" [project]="project" [hash]="hash"> </guider>\n      </ion-col>\n      <ion-col *ngIf="config">\n        <ion-row justify-content-center *ngIf="highlight.sentence?._id>2">\n          <ion-icon name="more"></ion-icon>\n        </ion-row>\n        <ion-row id="sentences">\n          <div *ngFor="let sent of doc?.sentences | isNextSentence: highlight.sentence" class="sentence" [ngClass]="{\n              rtl:configService.isRtl(project)}">\n            <!-- [hidden]=""> -->\n            <div>{{sent.tag}}</div>\n            <div tabindex="{{elem == highlight.element ? 1 : -1}}" *ngFor="let elem of sent.elements ; let i = index" class="element" [ngClass]="{\n              isCompounds:elem.upostag==\'_\',\n              highlight: highlight.element !== null && (elem == highlight.element || elem.parent == highlight.element),\n              copied: (elem == copyElement || elem.parent == copyElement) && copyElement !== null,\n              rtl:config.isRtl,\n              unclear: elem._miscs[\'UNCLEAR\'],\n              newline2: i%config.rowlength==0,\n              isSeg: elem.isSeg > 0,\n              ADJ : elem.upostag == \'ADJ\',\n              ADP : elem.upostag == \'ADP\',\n              ADV : elem.upostag == \'ADV\',\n              CCONJ : elem.upostag == \'CCONJ\',\n              DET : elem.upostag == \'DET\',\n              NOUN : elem.upostag == \'NOUN\',\n              NUM : elem.upostag == \'NUM\',\n              PART : elem.upostag == \'PART\',\n              PRON : elem.upostag == \'PRON\',\n              PROPN : elem.upostag == \'PROPN\',\n              PUNCT : elem.upostag == \'PUNCT\',\n              SCONJ : elem.upostag == \'SCONJ\',\n              VERB : elem.upostag == \'VERB\',\n              X : elem.upostag == \'X\'\n               }" (click)="events.publish(\'highlight:change\',elem,true,false)" [hidden]="elem.isMultiword" (dblclick)="editable = true">\n              <input *ngIf="editable && elem == highlight.element;else other_content" class="formInput" value="{{elem.form}}" focus="true" (keydown)="keyupFormEditor($event,elem)" (blur)="blurFormEditor($event,elem)" (focus)="resize($event)" (keyup)="resize($event)" />\n              <ng-template #other_content>\n                <span class="form" #spanForm>{{elem.getForm()}}</span>\n                <span class="postag">{{config.useUD ? config.tags[\'U:\'+elem.upostag]?.desc : config.tags[\'X:\'+elem.xpostag]?.desc}}</span>\n                <span class="lemma">/{{elem.lemma}}/</span>\n                <span class="mf_missing" [hidden]="elem.morphFeatsMissing().length == 0">{{elem.morphFeatsMissing().length}}</span>\n              </ng-template>\n            </div>\n          </div>\n        </ion-row>\n        <ion-row justify-content-center *ngIf="highlight.sentence?._id<doc?.sentences?.length-1">\n          <ion-icon name="more"></ion-icon>\n        </ion-row>\n      </ion-col>\n      <ion-col col-lg-4 id="conlluColumn" *ngIf="!config.isConlluHidden">\n        <ion-segment [(ngModel)]="conlluEditorType" color="secondary">\n          <ion-segment-button value="textarea">\n            <ion-icon name="create"></ion-icon>\n          </ion-segment-button>\n          <ion-segment-button value="pretty">\n            <ion-icon name="menu"></ion-icon>\n          </ion-segment-button>\n          <ion-segment-button value="errors">\n            <ion-icon name="warning" color="danger"></ion-icon>\n            <ion-badge color="danger" [hidden]="log.length ==0">{{log.length}}</ion-badge>\n          </ion-segment-button>\n          <ion-segment-button value="info">\n            <ion-icon name="information-circle"></ion-icon>\n          </ion-segment-button>\n        </ion-segment>\n        <ion-row *ngIf="conlluEditorType==\'textarea\'">\n          <ion-textarea tabindex="-1" no-text-wrap id="conlluTextArea" [ngModel]="conlluRaw" (change)="conlluRaw = $event.target.value" style="font-size: 7pt; margin-top:0; width: 100%;"></ion-textarea>\n        </ion-row>\n        <ion-row *ngIf="conlluEditorType==\'errors\'">\n          <div *ngFor="let l of log">{{l}}</div>\n          <!-- <ion-textarea [ngModel]="log" id="errorTextArea" rows="7" cols="80" style="margin-top:0" disabled="disabled"> -->\n          <!-- </ion-textarea> -->\n        </ion-row>\n        <ion-row *ngIf="conlluEditorType==\'pretty\'">\n          <conllu-editor [filename]="project+\'-\'+pageid" [raw]="conlluRaw" [hid]="[highlight.element?._id,highlight.sentence?._id]" (highlightChange)="highlightElement($event)" (rawChange)="conlluRaw=$event"></conllu-editor>\n        </ion-row>\n        <ion-row *ngIf="conlluEditorType==\'info\'">\n          <ion-card>\n            <ion-card-header>\n              Document Information\n            </ion-card-header>\n            <ion-list>\n              <ion-item><ion-icon name="cart" item-start></ion-icon>Sent #: {{info.sent_no}}</ion-item>\n              <ion-item><ion-icon name="cart" item-start></ion-icon>Elem #: {{info.elem_no}}</ion-item>\n              <ion-item><ion-icon name="cart" item-start></ion-icon>Tokens #: {{info.tokens_no}}</ion-item>\n              <ion-item><ion-icon name="cart" item-start></ion-icon>Types #: {{info.types_no}}</ion-item>\n              <ion-item><ion-icon name="cart" item-start></ion-icon>Multi Word Tokens #: {{info.mwe_no}}</ion-item>\n            </ion-list>\n          </ion-card>\n        </ion-row>\n      </ion-col>\n    </ion-row>\n    <!-- no need to show the intermediate data representation -->\n    <!-- <div class="conllu-parse" data-visid="vis" data-inputid="input" data-parsedid="parsed" data-logid="log"> -->\n  </ion-grid>\n  <!-- </ion-list> -->\n</ion-content>\n'/*ion-inline-end:"/Users/abbander/Leeds/Wasim/src/pages/annotate/annotate.html"*/,
+        selector: 'page-annotate',template:/*ion-inline-start:"/Users/abbander/Leeds/Wasim/src/pages/annotate/annotate.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>{{\'FILE\' | translate}}: {{pageid}}</ion-title>\n    <ion-buttons end>\n      <button right ion-button icon-only (click)="presentHelpFormPopover($event)" tabindex="-1">\n        <ion-icon name="help"></ion-icon>\n      </button>\n      <button small class=\'topbar_button\' ion-button icon-only tabindex="-1" (click)="syncConllU()">\n        <ion-icon name="sync"></ion-icon>\n      </button>\n      <button small *ngIf="config?.debug" class=\'topbar_button\' icon-left ion-button icon-only tabindex="-1" (click)="showStats()">\n        <ion-icon name="print"></ion-icon>\n      </button>\n      <button small class=\'topbar_button\' [disabled]="undoArr.length==0" icon-left ion-button icon-only tabindex="-1" (click)="undo()">\n        <ion-icon name="undo"></ion-icon>\n      </button>\n      <button small class=\'topbar_button\' [disabled]="redoArr.length==0" icon-left ion-button icon-only tabindex="-1" (click)="redo()">\n        <ion-icon name="redo"></ion-icon>\n      </button>\n      <button small class=\'topbar_button\' icon-left ion-button icon-only tabindex="-1" (click)="saveFile()">\n        <ion-icon name="cloud-upload"></ion-icon>\n      </button>\n      <button small class=\'topbar_button\' icon-left ion-button icon-only tabindex="-1" (click)="download()">\n        <ion-icon name="cloud-download"></ion-icon>\n      </button>\n      <button small class=\'topbar_button\' icon-left ion-button icon-only tabindex="-1" (click)="find($event)">\n        <ion-icon name="glasses"></ion-icon>\n      </button>\n      <button small class=\'topbar_button\' icon-left ion-button icon-only tabindex="-1" (click)="search($event)">\n        <ion-icon name="search"></ion-icon>\n      </button>\n      <button small class=\'topbar_button\' icon-left right ion-button icon-only tabindex="-1" (click)="config.isConlluHidden=!config.isConlluHidden">\n        <ion-icon [name]="config.isConlluHidden? \'eye\':\'eye-off\'"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n<ion-content padding>\n  <ion-grid style="height: 100%;">\n    <ion-row>\n      <ion-col col-12>\n        <ion-row>\n          <tags-selector *ngIf="highlight.element" [currentTags]="currentTags" [element]="highlight.element" (nextTags)="increaseTagsRow()"></tags-selector>\n        </ion-row>\n      </ion-col>\n    </ion-row>\n    <ion-row style="height: inherit;">\n      <ion-col col-lg-2 col-sm-3 col-12>\n        <ion-list *ngIf="highlight.element">\n          <button color="dark" outline block icon-left ion-button tabindex="-1" (click)="tag_morphofeatures()">\n            <ion-icon name="apps"></ion-icon>{{ \'Features\' | translate }} </button>\n          <button color="dark" outline block icon-left ion-button tabindex="-1" (click)="tag_ma()">\n            <ion-icon name="menu"></ion-icon>{{\'Analyser\' | translate}}</button>\n          <button color="dark" outline block icon-left ion-button tabindex="-1" (click)="addNote($event)">\n            <ion-icon name="create"></ion-icon> {{\'Note\' | translate}}\n          </button>\n          <ion-item *ngIf="highlight.element.parent">\n            <ion-label color="primary" stacked>{{\'Inflected Word Form\' | translate}}</ion-label>\n            <ion-input [(ngModel)]="highlight.element.parent.form" tabindex="2" [ngClass]="{\n              rtl:configService.isRtl(project)}"></ion-input>\n          </ion-item>\n          <ion-item (click)="mark_misc(\'UNCLEAR\')">\n            <ion-label>{{\'Unclear?\' | translate}}</ion-label>\n            <ion-checkbox [(ngModel)]="highlight.element._miscs[\'UNCLEAR\']"></ion-checkbox>\n          </ion-item>\n          <ion-item>\n            <ion-label color="primary" stacked>{{\'Lemma\' | translate}}</ion-label>\n            <ion-input [(ngModel)]="highlight.element.lemma" tabindex="4" [ngClass]="{\n              rtl:configService.isRtl(project)}"></ion-input>\n          </ion-item>\n          <ion-item *ngFor="let feat of highlight.element.features; let i=index">\n            <ion-label color="primary" stacked>{{feat.key}}</ion-label>\n            <ion-select [(ngModel)]="feat.value" interface="popover">\n              <ion-option *ngFor="let e of config.mf[feat.key];" [value]="e.tag">{{e.desc}}</ion-option>\n            </ion-select>\n          </ion-item>\n          <ion-item>\n            <ion-label color="primary" stacked>{{\'XPOS Tag\' | translate}}</ion-label>\n            <ion-select [(ngModel)]="highlight.element._xpostag" tabindex="2">\n              <ion-option *ngFor="let tag of config.alltags;" [value]="tag.tag">{{tag.tag}}: {{tag.desc}}</ion-option>\n            </ion-select>\n          </ion-item>\n          <ion-item>\n            <ion-label color="primary" stacked>{{\'UPOS Tag\' | translate}}</ion-label>\n            <ion-select [(ngModel)]="highlight.element.upostag">\n              <ion-option *ngFor="let tag of config.allutags;" [value]="tag.tag">{{tag.tag}}: {{tag.desc}}</ion-option>\n            </ion-select>\n          </ion-item>\n        </ion-list>\n        <guider *ngIf="config.askGuider && highlight.element" [element]="highlight.element" [config]="config" type="specialPos" [project]="project" [hash]="hash"> </guider>\n        <guider *ngIf="config.askGuider && highlight.element" [element]="highlight.element" [config]="config" type="specialSeg" [project]="project" [hash]="hash"> </guider>\n      </ion-col>\n      <ion-col *ngIf="config">\n        <ion-row justify-content-center *ngIf="highlight.sentence?._id>2">\n          <ion-icon name="more"></ion-icon>\n        </ion-row>\n        <ion-row id="sentences">\n          <div *ngFor="let sent of doc?.sentences | isNextSentence: highlight.sentence" class="sentence" [ngClass]="{\n              rtl:configService.isRtl(project)}">\n            <!-- [hidden]=""> -->\n            <div>{{sent.tag}}</div>\n            <div tabindex="{{elem == highlight.element ? 1 : -1}}" *ngFor="let elem of sent.elements ; let i = index" class="element" [ngClass]="{\n              isCompounds:elem.upostag==\'_\',\n              highlight: highlight.element !== null && (elem == highlight.element || elem.parent == highlight.element),\n              copied: (elem == copyElement || elem.parent == copyElement) && copyElement !== null,\n              rtl:config.isRtl,\n              unclear: elem._miscs[\'UNCLEAR\'],\n              newline2: i%config.rowlength==0,\n              isSeg: elem.isSeg > 0,\n              ADJ : elem.upostag == \'ADJ\',\n              ADP : elem.upostag == \'ADP\',\n              ADV : elem.upostag == \'ADV\',\n              CCONJ : elem.upostag == \'CCONJ\',\n              DET : elem.upostag == \'DET\',\n              NOUN : elem.upostag == \'NOUN\',\n              NUM : elem.upostag == \'NUM\',\n              PART : elem.upostag == \'PART\',\n              PRON : elem.upostag == \'PRON\',\n              PROPN : elem.upostag == \'PROPN\',\n              PUNCT : elem.upostag == \'PUNCT\',\n              SCONJ : elem.upostag == \'SCONJ\',\n              VERB : elem.upostag == \'VERB\',\n              X : elem.upostag == \'X\'\n               }" (click)="events.publish(\'highlight:change\',elem,true,false)" [hidden]="elem.isMultiword" (dblclick)="editable = true">\n              <input *ngIf="editable && elem == highlight.element;else other_content" class="formInput" value="{{elem.form}}" focus="true" (keydown)="keyupFormEditor($event,elem)" (blur)="blurFormEditor($event,elem)" (focus)="resize($event)" (keyup)="resize($event)" />\n              <ng-template #other_content>\n                <span class="form" #spanForm>{{elem.getForm()}}</span>\n                <span class="postag">{{ config.tags[\'X:\'+elem.xpostag] ? config.tags[\'X:\'+elem.xpostag].desc : elem.xpostag}}</span>\n                <span class="postag upostag" *ngIf="config.useUD">{{ config.tags[\'U:\'+elem.upostag] ? config.tags[\'U:\'+elem.upostag].desc : elem.upostag}}</span>\n                <span class="lemma">/{{elem.lemma}}/</span>\n                <span class="mf_missing" [hidden]="elem.morphFeatsMissing().length == 0">{{elem.morphFeatsMissing().length}}</span>\n              </ng-template>\n            </div>\n          </div>\n        </ion-row>\n        <ion-row justify-content-center *ngIf="highlight.sentence?._id<doc?.sentences?.length-1">\n          <ion-icon name="more"></ion-icon>\n        </ion-row>\n      </ion-col>\n      <ion-col col-lg-4 id="conlluColumn" *ngIf="!config.isConlluHidden">\n        <ion-segment [(ngModel)]="conlluEditorType" color="secondary">\n          <ion-segment-button value="textarea">\n            <ion-icon name="create"></ion-icon>\n          </ion-segment-button>\n          <ion-segment-button value="pretty">\n            <ion-icon name="menu"></ion-icon>\n          </ion-segment-button>\n          <ion-segment-button value="errors">\n            <ion-icon name="warning" color="danger"></ion-icon>\n            <ion-badge color="danger" [hidden]="log.length ==0">{{log.length}}</ion-badge>\n          </ion-segment-button>\n          <ion-segment-button value="info">\n            <ion-icon name="information-circle"></ion-icon>\n          </ion-segment-button>\n        </ion-segment>\n        <ion-row *ngIf="conlluEditorType==\'textarea\'">\n          <ion-textarea tabindex="-1" no-text-wrap id="conlluTextArea" [ngModel]="conlluRaw" (change)="conlluRaw = $event.target.value" style="font-size: 7pt; margin-top:0; width: 100%;"></ion-textarea>\n        </ion-row>\n        <ion-row *ngIf="conlluEditorType==\'errors\'">\n          <div *ngFor="let l of log">{{l}}</div>\n          <!-- <ion-textarea [ngModel]="log" id="errorTextArea" rows="7" cols="80" style="margin-top:0" disabled="disabled"> -->\n          <!-- </ion-textarea> -->\n        </ion-row>\n        <ion-row *ngIf="conlluEditorType==\'pretty\'">\n          <conllu-editor [filename]="project+\'-\'+pageid" [raw]="conlluRaw" [hid]="[highlight.element?._id,highlight.sentence?._id]" (highlightChange)="highlightElement($event)" (rawChange)="conlluRaw=$event"></conllu-editor>\n        </ion-row>\n        <ion-row *ngIf="conlluEditorType==\'info\'">\n          <ion-card>\n            <ion-card-header>\n              Document Information\n            </ion-card-header>\n            <ion-list>\n              <ion-item><ion-icon name="cart" item-start></ion-icon>Sent #: {{info.sent_no}}</ion-item>\n              <ion-item><ion-icon name="cart" item-start></ion-icon>Elem #: {{info.elem_no}}</ion-item>\n              <ion-item><ion-icon name="cart" item-start></ion-icon>Tokens #: {{info.tokens_no}}</ion-item>\n              <ion-item><ion-icon name="cart" item-start></ion-icon>Types #: {{info.types_no}}</ion-item>\n              <ion-item><ion-icon name="cart" item-start></ion-icon>Multi Word Tokens #: {{info.mwe_no}}</ion-item>\n              <ion-list>\n                <div *ngFor="let upos of config.allutags">\n                      <ion-item-divider color="light">{{upos.tag}} (#={{info.upos[upos.tag]}})</ion-item-divider>\n                        <ion-item *ngFor="let m of info.missing_features[upos.tag]">\n                          {{m[0]}}:{{m[1]}} {{m[1]/info.upos[upos.tag]*100}}%\n                        </ion-item>\n                  </div>\n              </ion-list>\n              <ion-item>\n                <button small class=\'topbar_button\' ion-button icon-only tabindex="-1" (click)="info = null">\n                  <ion-icon name="sync"></ion-icon>\n                </button>\n              </ion-item>\n\n            </ion-list>\n\n          </ion-card>\n        </ion-row>\n      </ion-col>\n    </ion-row>\n    <!-- no need to show the intermediate data representation -->\n    <!-- <div class="conllu-parse" data-visid="vis" data-inputid="input" data-parsedid="parsed" data-logid="log"> -->\n  </ion-grid>\n  <!-- </ion-list> -->\n</ion-content>\n'/*ion-inline-end:"/Users/abbander/Leeds/Wasim/src/pages/annotate/annotate.html"*/,
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */],
         __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* PopoverController */],
@@ -2006,9 +2038,9 @@ var Stats = (function () {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return WordService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_configuration_service__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_configuration_service__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_http__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(35);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_conllu_dao__ = __webpack_require__(124);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_conllu_dao___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_conllu_dao__);
@@ -2212,7 +2244,7 @@ WordService = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SelectizePopoverPageComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_config_json_class__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_config_json_class__ = __webpack_require__(37);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2598,15 +2630,15 @@ HelpPopoverComponent = __decorate([
 
 /***/ }),
 
-/***/ 261:
+/***/ 265:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return GuidelinesService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_configuration_service__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_configuration_service__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_http__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(35);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -2715,13 +2747,13 @@ GuidelinesService = __decorate([
 
 /***/ }),
 
-/***/ 263:
+/***/ 267:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(264);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(277);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(268);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(281);
 
 
 Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_1__app_module__["a" /* AppModule */]);
@@ -2729,36 +2761,36 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 
 /***/ }),
 
-/***/ 277:
+/***/ 281:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* unused harmony export loadConfiguration */
 /* unused harmony export deepLinkConfig */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(32);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_component__ = __webpack_require__(318);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_component__ = __webpack_require__(322);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_word_service__ = __webpack_require__(237);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_conllu_service__ = __webpack_require__(123);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_config_service__ = __webpack_require__(125);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__providers_guidelines_service__ = __webpack_require__(261);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__providers_guidelines_service__ = __webpack_require__(265);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__providers_project_service__ = __webpack_require__(231);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_annotate_annotate__ = __webpack_require__(236);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_components_module__ = __webpack_require__(421);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_components_module__ = __webpack_require__(427);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__ionic_native_in_app_browser__ = __webpack_require__(242);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pages_docs_docs__ = __webpack_require__(65);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__pages_projects_projects__ = __webpack_require__(64);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pipes_not_multi_tag__ = __webpack_require__(431);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pipes_is_next_sentence__ = __webpack_require__(432);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pipes_not_multi_tag__ = __webpack_require__(437);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pipes_is_next_sentence__ = __webpack_require__(438);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__angular_http__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__ionic_native_status_bar__ = __webpack_require__(228);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__ionic_native_splash_screen__ = __webpack_require__(230);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19_ng2_file_upload__ = __webpack_require__(232);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19_ng2_file_upload___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_19_ng2_file_upload__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20_angular2_focus__ = __webpack_require__(433);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21_ionic_configuration_service__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20_angular2_focus__ = __webpack_require__(439);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21_ionic_configuration_service__ = __webpack_require__(24);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2860,7 +2892,7 @@ AppModule = __decorate([
 
 /***/ }),
 
-/***/ 318:
+/***/ 322:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2871,7 +2903,7 @@ AppModule = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(230);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_projects_projects__ = __webpack_require__(64);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ngx_translate_core__ = __webpack_require__(50);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_ionic_configuration_service__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_ionic_configuration_service__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_storage__ = __webpack_require__(134);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -2913,9 +2945,7 @@ var MyApp = (function () {
         var langs = this.myconfig.getValue('langs');
         this.translateService.addLangs(langs);
         this.translateService.setDefaultLang("en");
-        storage.get("lang").then(function (s) { return _this.translateService.use(s); }).catch(function () {
-            _this.translateService.use(lang ? lang : browserLang);
-        });
+        storage.get("lang").then(function (s) { return s ? _this.translateService.use(s) : _this.translateService.use(lang ? lang : browserLang); });
         this.pages = [];
     }
     MyApp.prototype.initializeApp = function () {
@@ -2954,7 +2984,7 @@ MyApp = __decorate([
 
 /***/ }),
 
-/***/ 36:
+/***/ 37:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3335,25 +3365,25 @@ ConfigJSON.validation = {
 
 /***/ }),
 
-/***/ 421:
+/***/ 427:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* unused harmony export createTranslateLoader */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ComponentsModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common__ = __webpack_require__(29);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common__ = __webpack_require__(31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__selectize_popover_page_selectize_popover_page__ = __webpack_require__(240);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ma_selectize_popover_page_ma_selectize_popover_page__ = __webpack_require__(241);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__concordance_concordance__ = __webpack_require__(422);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__guider_guider__ = __webpack_require__(423);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__concordance_concordance__ = __webpack_require__(428);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__guider_guider__ = __webpack_require__(429);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__help_popover_help_popover__ = __webpack_require__(243);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__tags_selector_tags_selector__ = __webpack_require__(424);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__conllu_editor_conllu_editor__ = __webpack_require__(425);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__tags_selector_tags_selector__ = __webpack_require__(430);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__conllu_editor_conllu_editor__ = __webpack_require__(431);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_docs_docs__ = __webpack_require__(65);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_ng_selectize__ = __webpack_require__(426);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_ng_selectize__ = __webpack_require__(432);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__ngx_translate_core__ = __webpack_require__(50);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ngx_translate_http_loader__ = __webpack_require__(429);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ngx_translate_http_loader__ = __webpack_require__(435);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__angular_http__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14_ionic_angular__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__ionic_storage__ = __webpack_require__(134);
@@ -3437,13 +3467,13 @@ ComponentsModule = __decorate([
 
 /***/ }),
 
-/***/ 422:
+/***/ 428:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ConcordanceComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__providers_config_json_class__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__providers_config_json_class__ = __webpack_require__(37);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3486,15 +3516,15 @@ ConcordanceComponent = __decorate([
 
 /***/ }),
 
-/***/ 423:
+/***/ 429:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return GuiderComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_guidelines_service__ = __webpack_require__(261);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_config_json_class__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_guidelines_service__ = __webpack_require__(265);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_config_json_class__ = __webpack_require__(37);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3595,7 +3625,7 @@ GuiderComponent = __decorate([
 
 /***/ }),
 
-/***/ 424:
+/***/ 430:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3665,7 +3695,7 @@ TagsSelectorComponent = __decorate([
 
 /***/ }),
 
-/***/ 425:
+/***/ 431:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3857,7 +3887,7 @@ ConlluEditorComponent = __decorate([
 
 /***/ }),
 
-/***/ 431:
+/***/ 437:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3899,7 +3929,7 @@ NotMultiTag = __decorate([
 
 /***/ }),
 
-/***/ 432:
+/***/ 438:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3959,7 +3989,7 @@ IsNextSentence = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_project_service__ = __webpack_require__(231);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__docs_docs__ = __webpack_require__(65);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ngx_translate_core__ = __webpack_require__(50);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ionic_configuration_service__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ionic_configuration_service__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_storage__ = __webpack_require__(134);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -4169,15 +4199,15 @@ LoginModal = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ConfigModal; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_configuration_service__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng2_file_upload_ng2_file_upload__ = __webpack_require__(329);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_configuration_service__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng2_file_upload_ng2_file_upload__ = __webpack_require__(333);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng2_file_upload_ng2_file_upload___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_ng2_file_upload_ng2_file_upload__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_conllu_service__ = __webpack_require__(123);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__projects_projects__ = __webpack_require__(64);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__annotate_annotate__ = __webpack_require__(236);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ngx_translate_core__ = __webpack_require__(50);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__providers_config_service__ = __webpack_require__(125);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__providers_config_json_class__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__providers_config_json_class__ = __webpack_require__(37);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_ang_jsoneditor__ = __webpack_require__(249);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -4383,5 +4413,5 @@ ConfigModal = __decorate([
 
 /***/ })
 
-},[263]);
+},[267]);
 //# sourceMappingURL=main.js.map
