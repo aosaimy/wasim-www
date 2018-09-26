@@ -666,6 +666,11 @@ var AnnotatePage = (function () {
         this.documentJson = {};
         this.project = "";
         this.hash = "";
+        this.keyboardFunc = function (event) {
+            _this.zone.run(function () {
+                _this.keyboardShortcuts(event);
+            });
+        };
         this.pageid = "";
         this.editable = false;
         // isConlluHidden = false
@@ -1389,17 +1394,13 @@ var AnnotatePage = (function () {
         this.showAlertMessage = true;
     };
     AnnotatePage.prototype.ionViewDidLoad = function () {
-        var _this = this;
         // alternative: (put in annotate.ts)
         // (window:keydown)="keyboardShortcuts($event)"
-        console.log("second2_change");
-        var keyboardFunc = function (event) {
-            _this.zone.run(function () {
-                _this.keyboardShortcuts(event);
-            });
-        };
-        document.removeEventListener('keydown', keyboardFunc);
-        document.addEventListener('keydown', keyboardFunc);
+        console.log("forth_change");
+        document.addEventListener('keydown', this.keyboardFunc);
+    };
+    AnnotatePage.prototype.ionViewWillLeave = function () {
+        document.removeEventListener('keydown', this.keyboardFunc);
     };
     AnnotatePage.prototype.viewElementsPopup = function (analyses, e) {
         var _this = this;
