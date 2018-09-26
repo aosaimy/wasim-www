@@ -1392,12 +1392,14 @@ var AnnotatePage = (function () {
         var _this = this;
         // alternative: (put in annotate.ts)
         // (window:keydown)="keyboardShortcuts($event)"
-        console.log("first_change");
-        document.addEventListener('keydown', function (event) {
+        console.log("second2_change");
+        var keyboardFunc = function (event) {
             _this.zone.run(function () {
                 _this.keyboardShortcuts(event);
             });
-        });
+        };
+        document.removeEventListener('keydown', keyboardFunc);
+        document.addEventListener('keydown', keyboardFunc);
     };
     AnnotatePage.prototype.viewElementsPopup = function (analyses, e) {
         var _this = this;
